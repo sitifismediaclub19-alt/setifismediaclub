@@ -19,7 +19,7 @@
             --bg: #fdfdfd; 
             --card-bg: #ffffff;
             --primary: #1e3a8a; /* Navy Blue */
-            --accent: #b3e751; /* Lime Green - تم ترك هذا اللون كما هو من الكود الأصلي */
+            --accent: #b3e751; /* Lime Green */
             --text-color: #1f2937;
             --muted-color: #6b7280;
             --border-color: rgba(30, 58, 138, 0.08);
@@ -54,14 +54,13 @@
         }
         h1, h2, h3 { font-weight: 800; color: var(--text-color); }
         a { text-decoration: none; color: var(--primary); transition: color 0.3s; }
-        .main-nav a:hover { background: rgba(179, 231, 81, 0.1); color: var(--accent); } /* تعديل Hover للقائمة */
+        .main-nav a:hover { background: rgba(179, 231, 81, 0.1); color: var(--accent); } 
         a:hover { color: var(--accent); }
         
         /* 3. التخطيط والشبكة (Layout & Grid) */
         .container { max-width: 1280px; margin: 0 auto; padding: 0 24px; }
         section { padding: 100px 0; }
         
-        /* فاصل بصري بين الأقسام */
         .section-divider {
             height: 1px; width: 150px; background: var(--accent); 
             margin: 0 auto; margin-top: -30px; opacity: 0.3;
@@ -105,7 +104,7 @@
         header {
             position: sticky;
             top: 0;
-            z-index: 1000; /* تم رفع z-index ليكون فوق كل شيء */
+            z-index: 1000;
             backdrop-filter: blur(10px);
             background: rgba(253, 253, 253, 0.9); 
             border-bottom: 1px solid var(--border-color);
@@ -160,7 +159,7 @@
             text-align: center;
             position: relative;
             color: #fff;
-            z-index: 1; /* جعلها خلف الهيدر */
+            z-index: 1;
         }
         .hero-section::before {
             content: '';
@@ -191,7 +190,7 @@
             background: var(--card-bg); border-radius: 18px; padding: 40px;
             border: 1px solid var(--border-color);
             position: relative; 
-            z-index: 10; /* تخفيض z-index ليكون تحت header */
+            z-index: 10; 
         }
         .gallery-info h2 { color: var(--primary); margin-top: 0; font-size: 2rem; }
         .photo-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
@@ -227,7 +226,6 @@
         .video-embed {
             position: relative;
             width: 100%;
-            /* نسبة 16:9 للفيديو */
             padding-bottom: 56.25%; 
             height: 0;
         }
@@ -259,9 +257,9 @@
         .btn:hover { transform: translateY(-4px); box-shadow: 0 10px 25px rgba(30, 58, 138, 0.35); }
         .btn.secondary { background: transparent; color: var(--primary); border-color: var(--border-color); box-shadow: none; }
         .btn.secondary:hover { background: rgba(30, 58, 138, 0.03); transform: translateY(-2px); }
-        /* تم تعديل لون الظل ليتناسب مع لون accent الحالي (#b3e751) */
         .btn.accent { background: var(--accent); border-color: var(--accent); color: var(--text-color); box-shadow: 0 6px 18px rgba(179, 231, 81, 0.4); } 
         .btn.accent:hover { color: var(--primary); }
+        .btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; box-shadow: none; }
 
         /* 10. التذييل (Footer) */
         footer { 
@@ -289,7 +287,7 @@
             transform: scale(1.15);
         }
 
-        /* 11. التجاوبية (Responsiveness) - Mobile Menu Fix */
+        /* 11. التجاوبية (Responsiveness) */
         @media (max-width: 900px) {
             .hero-section h1 { font-size: 2.5rem; }
             .section-title { font-size: 2rem; }
@@ -355,7 +353,7 @@
                     <i class="fas fa-bars"></i>
                 </button>
 
-                <button id="toggleTheme" class="btn secondary" title="Toggle Dark/Light Mode" aria-label="تبديل الوضع الليلي/النهاري">
+                <button id="toggleTheme" class="btn secondary" title="Toggle Dark/Light Mode" aria-label="تبديل الوضع الليلي/النهاري" onclick="toggleTheme()">
                     <i id="themeIcon" class="fas fa-adjust"></i>
                 </button>
             </div>
@@ -366,7 +364,7 @@
         <div class="container">
             <span class="slogan">إعلام واعد لجيل صاعد</span>
             <h1>مرحبا بكم في موقعنا الرسمي </h1>
-            <p class="hero-lead">نحن نُنشئ جيلاً من الرواد الإعلاميين عبر ورشات متقدمة وإنتاج احترافي، شاركونا رحلتنا  .</p>
+            <p class="hero-lead">نحن نُنشئ جيلاً من الرواد الإعلاميين عبر ورشات متقدمة وإنتاج احترافي، شاركونا رحلتنا  .</p>
 
             <div class="cta-row">
                 <a class="btn" href="#services"><i class="fas fa-arrow-down"></i> اكتشف برامجنا</a>
@@ -419,7 +417,7 @@
                </article>
 
                <article class="card">
-                   <h3><i class="fas fa-handshake"></i> الشراكات  </h3>
+                   <h3><i class="fas fa-handshake"></i> الشراكات  </h3>
                    <p class="muted-text">برامج توجيه مكثفة، وتوفير فرص التدريب الحصري مع شركاء النادي من المؤسسات الخارجية و الأقسام و النوادي الأخري.</p>
                </article>
 
@@ -495,21 +493,13 @@
 
                 <form name="contact-form" id="contact-form" onsubmit="submitForm(event)" style="display:flex; flex-direction: column; gap: 15px; margin-top: 30px;">
                     <input type="text" name="name" placeholder="الاسم الكامل" required style="padding: 12px; border: 1px solid var(--border-color); border-radius: 8px;">
-                    <input type="universty" name="universty" placeholder="التخصص الجامعي" required style="padding: 12px; border: 1px solid var(--border-color); border-radius: 8px;">
+                    <input type="text" name="universty" placeholder="التخصص الجامعي" required style="padding: 12px; border: 1px solid var(--border-color); border-radius: 8px;">
                     <input type="email" name="email" placeholder="البريد الإلكتروني" required style="padding: 12px; border: 1px solid var(--border-color); border-radius: 8px;">
-                    <input type="phone number" name="phone number" placeholder="رقم الهاتف" required style="padding: 12px; border: 1px solid var(--border-color); border-radius: 8px;">
-                    <textarea name="message" placeholder="رسالتك" required style="padding: 12px; border: 1px solid var(--border-color); border-radius: 8px; min-height: 120px;"></textarea>
-                    <button type="submit" class="btn accent"><i class="fas fa-paper-plane"></i> أرسل الآن</button>
+                    <textarea name="message" placeholder="رسالتك أو سؤالك" rows="4" style="padding: 12px; border: 1px solid var(--border-color); border-radius: 8px;"></textarea>
+
+                    <button type="submit" id="submitButton" class="btn accent" style="width: 100%;"><i class="fas fa-paper-plane"></i> إرسال الطلب</button>
+                    <p id="formStatus" style="text-align: center; margin-top: 15px; font-weight: 700; display: none;"></p>
                 </form>
-
-                <div id="form-status" style="margin-top: 20px; text-align: center; font-weight: bold;"></div>
-
-                <div class="social-icons-footer">
-                    <a href="https://www.facebook.com/profile.php?id=100054351229278" target="_blank" title="صفحتنا على فيسبوك"><i class="fab fa-facebook-square"></i></a>
-                    <a href="https://www.instagram.com/sitifismediaclub19?igsh=MXdhaWdlcjNjdDRjZQ==" target="_blank" title="صفحتنا على إنستغرام"><i class="fab fa-instagram-square"></i></a>
-                    <a href="https://www.youtube.com/@sitifismediaclub" target="_blank" aria-label="يوتيوب"><i class="fab fa-youtube"></i></a>
-                    <a href="https://www.tiktok.com/@sitifis.media.clu?_t=ZS-905PwpZETXr&_r=1" target="_blank" title="حسابنا على تيك توك"><i class="fab fa-tiktok"></i></a>
-                </div>
             </div>
         </section>
 
@@ -517,119 +507,109 @@
 
     <footer>
         <div class="container">
-            © 2025 نادي سيتيفيس للإعلام — جودة، احترافية، وتميز.
+            <p>&copy; 2025 نادي سيتيفيس للإعلام. جميع الحقوق محفوظة.</p>
+            <div class="social-icons-footer">
+                <a href="https://www.facebook.com/profile.php?id=100054351229278" target="_blank" aria-label="فيسبوك"><i class="fab fa-facebook-f"></i></a>
+                <a href="https://www.youtube.com/@sitifismediaclub" target="_blank" aria-label="يوتيوب"><i class="fab fa-youtube"></i></a>
+                <a href="https://www.instagram.com/sitifismediaclub19?igsh=MXdhaWdlcjNjdDRjZQ==" target="_blank" aria-label="إنستغرام"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.tiktok.com/@sitifis.media.clu?_t=ZS-905PwpZETXr&_r=1" target="_blank" aria-label="تيك توك"><i class="fab fa-tiktok"></i></a>
+            </div>
         </div>
     </footer>
 
     <script>
-        // **********************************************
-        // 1. منطق الوضع الليلي (Dark Mode Toggle)
-        // **********************************************
-        const toggleButton = document.getElementById('toggleTheme');
-        const themeIcon = document.getElementById('themeIcon');
-        const storageKey = 'sitifis_theme';
-        
-        function applyTheme(isDark) {
-            themeIcon.classList.remove('fa-sun', 'fa-moon', 'fa-adjust'); 
-
-            if (isDark) {
-                document.body.classList.add('dark');
-                themeIcon.classList.add('fa-sun'); 
-            } else {
-                document.body.classList.remove('dark');
-                themeIcon.classList.add('fa-moon'); 
-            }
-            localStorage.setItem(storageKey, isDark ? 'dark' : 'light');
-        }
-
-        const storedTheme = localStorage.getItem(storageKey);
-        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        
-        if (storedTheme === 'dark') {
-            applyTheme(true);
-        } else if (storedTheme === 'light') {
-            applyTheme(false);
-        } else {
-            applyTheme(prefersDark);
-        }
-
-        toggleButton.addEventListener('click', () => {
-            const isDark = !document.body.classList.contains('dark');
-            applyTheme(isDark);
-        });
-
-        // **********************************************
-        // 2. ميزة Scroll Reveal (إظهار العناصر أثناء التمرير)
-        // **********************************************
-        const cardsToReveal = document.querySelectorAll('.card, .video-card'); // 💡 تم تحديث هذا السطر ليشمل .video-card
-
-        const revealCards = () => {
-            const windowHeight = window.innerHeight;
-            const revealPoint = 120; 
-
-            cardsToReveal.forEach(card => {
-                const cardTop = card.getBoundingClientRect().top;
-                
-                if (cardTop < windowHeight - revealPoint) {
-                    card.classList.add('visible');
-                } 
-            });
-        };
-        
-        window.addEventListener('scroll', revealCards);
-        window.addEventListener('load', revealCards);
-        
-        revealCards();
-
-        // **********************************************
-        // 3. منطق قائمة الجوال (Mobile Menu Toggle)
-        // **********************************************
-        function toggleMenu() {
-            const nav = document.getElementById('mainNav');
-            const btn = document.querySelector('.menu-toggle');
-            const isExpanded = nav.classList.contains('show');
-
-            if (isExpanded) {
-                nav.classList.remove('show');
-                btn.setAttribute('aria-expanded', 'false');
-            } else {
-                nav.classList.add('show');
-                btn.setAttribute('aria-expanded', 'true');
-            }
-        }
-        
-        // إغلاق القائمة عند النقر على رابط (في الجوال)
-        document.querySelectorAll('#mainNav a').forEach(link => {
-            link.addEventListener('click', () => {
-                const nav = document.getElementById('mainNav');
-                const btn = document.querySelector('.menu-toggle');
-                if (window.innerWidth <= 900 && nav.classList.contains('show')) {
-                    nav.classList.remove('show');
-                    btn.setAttribute('aria-expanded', 'false');
-                }
-            });
-        });
-        
-        // **********************************************
-        // 4. منطق إرسال النموذج (Form Submission) - (افتراضي)
-        // **********************************************
-        const scriptURL = 'https://docs.google.com/spreadsheets/d/15k8k8jIzSc39r9YRNG886JB_lo-Vu1usxQB4BadozR8/edit?usp=sharing'; // استبدله بالرابط الخاص بك
+        // ********************************************
+        // 1. إعدادات نموذج التواصل (Google Sheets Integration)
+        // ********************************************
+        // **الخطوة الحاسمة:** الصق رابط نشر Apps Script هنا بعد النشر
+        const SCRIPT_URL = "https://sheetdb.io/api/v1/a6s6gn6bwvh43"; 
 
         function submitForm(event) {
             event.preventDefault();
-            const formStatus = document.getElementById('form-status');
-            formStatus.style.color = 'var(--primary)';
-            formStatus.textContent = "جاري إرسال الرسالة، يرجى الانتظار...";
 
-            // هنا يمكنك إضافة منطق إرسال النموذج الفعلي (مثل استخدام Fetch API أو AJAX)
-            // بما أن هذا كود HTML/CSS/JS فقط، سنقوم بمحاكاة الإرسال
-            setTimeout(() => {
-                formStatus.style.color = 'var(--accent)';
-                formStatus.textContent = "✅ شكراً لك! تم استلام رسالتك بنجاح وسنتواصل معك قريباً.";
-                document.getElementById('contact-form').reset();
-            }, 2000);
+            const form = document.getElementById('contact-form');
+            const status = document.getElementById('formStatus');
+            const submitButton = document.getElementById('submitButton');
+
+            if (SCRIPT_URL.includes("https://sheetdb.io/api/v1/a6s6gn6bwvh43")) {
+                status.style.display = 'block';
+                status.style.color = 'red';
+                status.textContent = '❌ لم يتم تحديث رابط التطبيق! يرجى لصق رابط النشر الصحيح.';
+                return;
+            }
+            
+            status.style.display = 'block';
+            status.style.color = '#1e3a8a'; // لون مؤقت للإرسال
+            status.textContent = 'جاري الإرسال... الرجاء الانتظار.';
+            submitButton.disabled = true;
+
+            const formData = new FormData(form);
+            
+            fetch(SCRIPT_URL, {
+                method: 'POST',
+                body: formData,
+                mode: 'no-cors' 
+            })
+            .then(() => {
+                // يفترض النجاح
+                status.style.color = 'green';
+                status.textContent = '✅ تم إرسال طلبك بنجاح! نعتز بتواصلك.';
+                form.reset(); 
+            })
+            .catch(error => {
+                console.error('Fetch Error:', error);
+                status.style.color = 'red';
+                status.textContent = '❌ حدث خطأ في الاتصال. تأكد من إعدادات النشر والرابط.';
+            })
+            .finally(() => {
+                submitButton.disabled = false;
+            });
         }
-        // **********************************************
+        
+        // ********************************************
+        // 2. دوال تفاعلية أخرى (Theme, Menu, Observer)
+        // ********************************************
+        
+        // دالة تبديل الوضع الليلي/النهاري
+        function toggleTheme() {
+            document.body.classList.toggle('dark');
+            const isDark = document.body.classList.contains('dark');
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            const themeIcon = document.getElementById('themeIcon');
+            themeIcon.className = isDark ? 'fas fa-sun' : 'fas fa-adjust';
+        }
+
+        // تطبيق الوضع عند تحميل الصفحة
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark') {
+            document.body.classList.add('dark');
+            document.getElementById('themeIcon').className = 'fas fa-sun';
+        } else {
+            document.getElementById('themeIcon').className = 'fas fa-adjust';
+        }
+
+        // دالة قائمة الهاتف (Mobile Menu)
+        function toggleMenu() {
+            const nav = document.getElementById('mainNav');
+            const toggle = document.querySelector('.menu-toggle');
+            const isExpanded = nav.classList.toggle('show');
+            toggle.setAttribute('aria-expanded', isExpanded);
+        }
+
+        // دالة لمراقبة ظهور البطاقات (Card Observer)
+        const observerOptions = { root: null, rootMargin: '0px', threshold: 0.1 };
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.card, .video-card').forEach(card => {
+            observer.observe(card);
+        });
     </script>
 </body>
 </html>
