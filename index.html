@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>نادي سيتيفيس للإعلام | الجودة والاحترافية</title>
+    <meta name="description" content="نادي سيتيفيس للإعلام بجامعة سطيف 2 — يرحب بكم في موقعه الرسمي ." />
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    
+    <style>
+        /* 1. متغيرات النظام (System Variables) */
+        :root {
+            /* Light Mode */
+            --bg: #fdfdfd; 
+            --card-bg: #ffffff;
+            --primary: #1e3a8a; /* Navy Blue */
+            --accent: #b3e751; /* Lime Green - تم ترك هذا اللون كما هو من الكود الأصلي */
+            --text-color: #1f2937;
+            --muted-color: #6b7280;
+            --border-color: rgba(30, 58, 138, 0.08);
+            --radius: 12px;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            --transition: 0.4s ease-in-out;
+            --hero-bg-light: linear-gradient(180deg, rgba(30, 58, 138, 0.95), rgba(30, 58, 138, 0.9));
+        }
+        /* Dark Mode */
+        body.dark {
+            --bg: #0d1117; 
+            --card-bg: #161b22;
+            --primary: #60a5fa;
+            --accent: #b3e751;
+            --text-color: #c9d1d9;
+            --muted-color: #8b949e;
+            --border-color: rgba(255, 255, 255, 0.08);
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            --hero-bg-dark: linear-gradient(180deg, rgba(13, 17, 23, 0.95), rgba(13, 17, 23, 0.9));
+        }
+
+        /* 2. الإعدادات الأساسية (Base Styles) */
+        * { box-sizing: border-box; }
+        body {
+            margin: 0;
+            font-family: 'Cairo', sans-serif;
+            background: var(--bg);
+            color: var(--text-color);
+            line-height: 1.8;
+            transition: background var(--transition), color var(--transition);
+            scroll-behavior: smooth;
+        }
+        h1, h2, h3 { font-weight: 800; color: var(--text-color); }
+        a { text-decoration: none; color: var(--primary); transition: color 0.3s; }
+        .main-nav a:hover { background: rgba(179, 231, 81, 0.1); color: var(--accent); } /* تعديل Hover للقائمة */
+        a:hover { color: var(--accent); }
+        
+        /* 3. التخطيط والشبكة (Layout & Grid) */
+        .container { max-width: 1280px; margin: 0 auto; padding: 0 24px; }
+        section { padding: 100px 0; }
+        
+        /* فاصل بصري بين الأقسام */
+        .section-divider {
+            height: 1px; width: 150px; background: var(--accent); 
+            margin: 0 auto; margin-top: -30px; opacity: 0.3;
+        }
+
+        .section-title { 
+            text-align: center; 
+            margin-bottom: 70px; 
+            font-size: 2.8rem; 
+            font-weight: 900;
+            color: var(--primary);
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        /* 4. مكونات البطاقات (Card Components) */
+        .card {
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+            transition: transform 0.5s, box-shadow 0.5s, opacity 0.6s;
+            opacity: 0; 
+            transform: translateY(30px); 
+        }
+        .card:hover { transform: translateY(-8px); box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08); }
+        .card.visible { opacity: 1; transform: translateY(0); }
+        .card h3 { color: var(--primary); font-size: 1.6rem; margin-top: 0; }
+        .card h3 i { color: var(--accent); margin-left: 10px; }
+        .leader-card img {
+            width: 100%; height: 220px; object-fit: cover;
+            border-radius: 8px; margin-bottom: 15px;
+        }
+        .leader-card p { font-size: 0.95rem; line-height: 1.6; }
+
+        /* 5. شريط الترويسة (Header) */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 1000; /* تم رفع z-index ليكون فوق كل شيء */
+            backdrop-filter: blur(10px);
+            background: rgba(253, 253, 253, 0.9); 
+            border-bottom: 1px solid var(--border-color);
+        }
+        body.dark header { background: rgba(13, 17, 23, 0.9); }
+        
+        .navbar { 
+            display: flex; 
+            align-items: center; 
+            justify-content: space-between; 
+            padding: 12px 0; 
+        }
+        .logo-brand { font-size: 1.4rem; font-weight: 800; color: var(--primary); display: flex; align-items: center; gap: 10px; }
+        .logo-circle {
+            width: 42px; height: 42px; border-radius: 50%; background: var(--primary);
+            font-size: 20px; font-weight: 800; color: #fff;
+            display: flex; justify-content: center; align-items: center;
+        }
+        
+        .main-nav { 
+            display: flex; 
+            gap: 10px; 
+        }
+        .main-nav a { font-weight: 600; padding: 8px 15px; border-radius: 6px; color: var(--text-color); }
+        
+        .menu-toggle { display: none; background: transparent; border: none; font-size: 24px; cursor: pointer; color: var(--primary); }
+        .nav-controls { display: flex; align-items: center; gap: 10px; }
+
+        .social-icons-header {
+            display: flex;
+            gap: 5px;
+            margin-left: 10px; 
+        }
+        .social-icons-header a {
+            font-size: 1.1rem;
+            color: var(--primary);
+            padding: 8px;
+            border-radius: 50%;
+            transition: background 0.3s;
+        }
+        .social-icons-header a:hover {
+            background: var(--border-color);
+            color: var(--accent);
+        }
+
+        /* 6. قسم الهيرو (Hero) */
+        .hero-section {
+            background-image: url('https://scontent.fqsf1-2.fna.fbcdn.net/v/t39.30808-6/500269318_1218677286620634_145639715729662214_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=833d8c&_nc_eui2=AeEk32Bx_c_Ovgvp4PsUcRY3-87zIj565gb7zvMiPnrmBiPLpB0g5ZJn9LkENeMEhBHNLoPZDX2qTalNqPZvS7kd&_nc_ohc=LUPX4V0eJLwQ7kNvwGTO7UO&_nc_oc=AdkCRvrNi7-UIJCaDMtY2Dk6bbxTIgaLQJdbij4UtFP60qr5SU2556J8y8TvjkQ7LVw&_nc_zt=23&_nc_ht=scontent.fqsf1-2.fna&_nc_gid=XFgVCCCmqR11ZUGBoPVeWQ&oh=00_Aff7epMqpr-e-I8GQK0AtnUOwHJF6TON24SOp20xKyhmiQ&oe=68E6DBD8');
+            background-size: cover;
+            background-position: center 20%;
+            padding: 130px 24px 80px;
+            text-align: center;
+            position: relative;
+            color: #fff;
+            z-index: 1; /* جعلها خلف الهيدر */
+        }
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: var(--hero-bg-light); 
+            z-index: 1; 
+            transition: background var(--transition);
+        }
+        body.dark .hero-section::before {
+             background: var(--hero-bg-dark); 
+        }
+
+        .hero-section * { position: relative; z-index: 2; color: #fff; }
+        .hero-section h1 { font-size: 4rem; margin: 0 0 15px; color: #fff; }
+        .slogan { font-weight: 700; margin-bottom: 30px; font-size: 1.2rem; color: var(--accent); }
+        .hero-lead { font-size: 1.2rem; max-width: 800px; margin: 0 auto 40px; color: rgba(255,255,255,0.8); }
+        .cta-row a { color: #fff; }
+        .cta-row .btn.secondary { background: rgba(255,255,255,0.15); border-color: rgba(255,255,255,0.3); }
+        .cta-row .btn.secondary:hover { background: rgba(255,255,255,0.3); }
+
+        /* 7. قسم الشريط البصري (Gallery Preview) */
+        #gallery-preview { padding: 0 0 140px 0; background: var(--bg); }
+        .gallery-strip {
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1); 
+            margin-top: -40px; 
+            display: grid; grid-template-columns: 1fr 2fr; gap: 30px;
+            background: var(--card-bg); border-radius: 18px; padding: 40px;
+            border: 1px solid var(--border-color);
+            position: relative; 
+            z-index: 10; /* تخفيض z-index ليكون تحت header */
+        }
+        .gallery-info h2 { color: var(--primary); margin-top: 0; font-size: 2rem; }
+        .photo-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+        .photo-grid img {
+            width: 100%; height: 150px; object-fit: cover; border-radius: 8px;
+            filter: brightness(0.95); transition: transform 0.3s, filter 0.3s;
+        }
+        .photo-grid img:hover { transform: scale(1.03); filter: brightness(1.1); }
+        
+        /* 8. تنسيقات قسم الفيديوهات (Media Coverage) */
+        #media-coverage {
+            background: var(--bg);
+        }
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        .video-card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            transition: transform 0.3s, opacity 0.6s;
+            border: 1px solid var(--border-color);
+            opacity: 0; 
+            transform: translateY(30px); 
+        }
+        .video-card.visible { opacity: 1; transform: translateY(0); }
+        .video-card:hover {
+            transform: translateY(-5px);
+        }
+        .video-embed {
+            position: relative;
+            width: 100%;
+            /* نسبة 16:9 للفيديو */
+            padding-bottom: 56.25%; 
+            height: 0;
+        }
+        .video-embed iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        .video-info {
+            padding: 15px 20px 20px;
+        }
+        .video-info h4 {
+            margin-top: 0;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        /* نهاية تنسيقات قسم الفيديوهات */
+
+        /* 9. الأزرار (Buttons) */
+        .btn {
+            padding: 14px 30px; border-radius: 8px; font-weight: 700; display: inline-flex;
+            align-items: center; gap: 12px; border: 2px solid transparent; cursor: pointer;
+            transition: all 0.3s ease; background: var(--primary); color: #fff;
+            box-shadow: 0 6px 18px rgba(30, 58, 138, 0.2);
+        }
+        .btn:hover { transform: translateY(-4px); box-shadow: 0 10px 25px rgba(30, 58, 138, 0.35); }
+        .btn.secondary { background: transparent; color: var(--primary); border-color: var(--border-color); box-shadow: none; }
+        .btn.secondary:hover { background: rgba(30, 58, 138, 0.03); transform: translateY(-2px); }
+        /* تم تعديل لون الظل ليتناسب مع لون accent الحالي (#b3e751) */
+        .btn.accent { background: var(--accent); border-color: var(--accent); color: var(--text-color); box-shadow: 0 6px 18px rgba(179, 231, 81, 0.4); } 
+        .btn.accent:hover { color: var(--primary); }
+
+        /* 10. التذييل (Footer) */
+        footer { 
+            padding: 40px 0; 
+            border-top: 1px solid var(--border-color); 
+            font-size: 1rem; 
+            color: var(--muted-color); 
+            text-align: center; 
+            background: var(--card-bg); 
+        }
+        
+        .social-icons-footer {
+            margin-top: 30px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+        .social-icons-footer a {
+            font-size: 1.8rem;
+            color: var(--primary);
+            transition: transform 0.3s, color 0.3s;
+        }
+        .social-icons-footer a:hover {
+            color: var(--accent);
+            transform: scale(1.15);
+        }
+
+        /* 11. التجاوبية (Responsiveness) - Mobile Menu Fix */
+        @media (max-width: 900px) {
+            .hero-section h1 { font-size: 2.5rem; }
+            .section-title { font-size: 2rem; }
+            section { padding: 60px 0; }
+            .gallery-strip { grid-template-columns: 1fr; padding: 30px; margin-top: -80px; }
+            .photo-grid { grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); }
+            
+            .social-icons-header {
+                visibility: hidden; 
+                width: 0; 
+            }
+
+            .main-nav { 
+                display: none; 
+                flex-direction: column; 
+                position: absolute;
+                top: 60px; 
+                left: 24px;
+                right: 24px;
+                background: var(--card-bg);
+                padding: 15px;
+                border-radius: var(--radius);
+                box-shadow: var(--shadow);
+                border: 1px solid var(--border-color);
+                z-index: 60;
+            }
+            .main-nav.show {
+                display: flex; 
+            }
+            .main-nav a { padding: 10px; border-bottom: 1px solid var(--border-color); }
+            .main-nav a:last-child { border-bottom: none; }
+            
+            .menu-toggle { display: block; }
+        }
+    </style>
+</head>
+<body>
+    
+    <header>
+        <div class="container navbar">
+            <a href="#hero" class="logo-brand">
+                <div class="logo-circle">س</div>
+                نادي سيتيفيس للإعلام
+            </a>
+            
+            <nav class="main-nav" id="mainNav">
+                <a href="#hero">الرئيسية</a>
+                <a href="#services">الخدمات</a>
+                <a href="#media-coverage">تغطيات إعلامية</a> <a href="#gallery-preview">صور النادي</a>
+                <a href="#leaders">القيادة</a>
+                <a href="#contact">التواصل</a>
+            </nav>
+
+            <div class="nav-controls">
+                <div class="social-icons-header">
+                    <a href="https://www.facebook.com/profile.php?id=100054351229278" target="_blank" aria-label="فيسبوك"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://www.youtube.com/@sitifismediaclub" target="_blank" aria-label="يوتيوب"><i class="fab fa-youtube"></i></a>
+                    <a href="https://www.instagram.com/sitifismediaclub19?igsh=MXdhaWdlcjNjdDRjZQ==" target="_blank" aria-label="إنستغرام"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.tiktok.com/@sitifis.media.clu?_t=ZS-905PwpZETXr&_r=1" target="_blank" aria-label="تيك توك"><i class="fab fa-tiktok"></i></a>
+                </div>
+
+                <button class="menu-toggle" onclick="toggleMenu()" aria-expanded="false" aria-controls="mainNav">
+                    <i class="fas fa-bars"></i>
+                </button>
+
+                <button id="toggleTheme" class="btn secondary" title="Toggle Dark/Light Mode" aria-label="تبديل الوضع الليلي/النهاري">
+                    <i id="themeIcon" class="fas fa-adjust"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div class="hero-section" id="hero">
+        <div class="container">
+            <span class="slogan">إعلام واعد لجيل صاعد</span>
+            <h1>مرحبا بكم في موقعنا الرسمي </h1>
+            <p class="hero-lead">نحن نُنشئ جيلاً من الرواد الإعلاميين عبر ورشات متقدمة وإنتاج احترافي، شاركونا رحلتنا  .</p>
+
+            <div class="cta-row">
+                <a class="btn" href="#services"><i class="fas fa-arrow-down"></i> اكتشف برامجنا</a>
+                <a class="btn secondary" href="mailto:sitifismediaclub19@gmail.com"><i class="fas fa-user-check"></i> انضم إلى الرؤية</a>
+            </div>
+        </div>
+    </div>
+
+    <main class="container">
+
+        <section id="gallery-preview">
+            <div class="gallery-strip">
+                <div class="gallery-info">
+                   <h2>الرؤية في صور</h2>
+                   <p class="muted-text">استعرض اللحظات الأكثر تأثيراً من فعالياتنا، وورشات عملنا، ومشاريعنا الإعلامية.</p>
+                   <a class="btn secondary" href="#"><i class="fas fa-camera"></i> شاهد كل الألبوم</a>
+                </div>
+                <div class="photo-grid">
+                   <img src="https://scontent.fqsf1-1.fna.fbcdn.net/v/t39.30808-6/499978668_1218649689956727_3622575170170885982_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=833d8c&_nc_eui2=AeE98wfV3kgktcEFr8BEYN3yu6z9wT8FUIS7rP3BPwVQhMc5b7-sYZjizJ8cvC2Xh3fGw4b_WwbyiGFvyCya-LK1&_nc_ohc=0JVs2XE6YA4Q7kNvwFrUqfn&_nc_oc=AdnxyS08-Z8e0846MRdSNWvlOOY26LQ6HX6NrPvon9xqZHYt3ykag4yMyxgUgY02WSM&_nc_zt=23&_nc_ht=scontent.fqsf1-1.fna&_nc_gid=u1KFhZcU04FYzkTjD7ntoQ&oh=00_Afc7IYCPw8qOVvl7pmfQUnszRfwtoAGSU72QlFRdVtSNLw&oe=68E6E781" alt="صورة من ورشة عمل النادي" loading="lazy">
+                   <img src="https://scontent.fqsf1-2.fna.fbcdn.net/v/t39.30808-6/481247717_1171425004679196_107966210370966019_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=833d8c&_nc_eui2=AeF1x7BECx6PgAIOOoVwr5i7DqJKHndQSNsOokoed1BI2_t6yO-gFFc9JG5wZL909nvnSISqoI6d9uQSIonJKMes&_nc_ohc=A9BqjXBxa-8Q7kNvwGXKzS7&_nc_oc=AdmntvVVZmkbr4-Wx_aWDSePubt1p54kvX2JJJYzk_tmhGlpfqgF0W_SCYbWN6u509U&_nc_zt=23&_nc_ht=scontent.fqsf1-2.fna&_nc_gid=FRWnCbrkNdyoxeIXoKPzaQ&oh=00_Afd4E7PMSwr7kYkZCrmEc8TKr7G-3qcdOCq70ilFX6UO6Q&oe=68E6E642" alt="صورة من كواليس الإنتاج" loading="lazy">
+                   <img src="https://scontent.fqsf1-2.fna.fbcdn.net/v/t39.30808-6/480978806_1171427614678935_7477868560062278526_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=833d8c&_nc_eui2=AeH3JHTMFGfRHO9PVfpaOS1ttuQullsjPQe25C6WWyM9B3P-x-5vQ6R9iTwB-F6-gXsKcBOlKHUXx9NnnHQ8UNC6&_nc_ohc=Wa_Q4D4kJ60Q7kNvwHC2SQN&_nc_oc=AdmAXXkPjgGtw99YsbgPMwvt5ABk9yXI4ZlmihEE7YmuI0BtACLab5vq8qBHMkbjAnE&_nc_zt=23&_nc_ht=scontent.fqsf1-2.fna&_nc_gid=GqCRpL9qgo-mdGdaNoV5wQ&oh=00_AfdrJGhsgYcxX9fS3S6zfL9wN0EnFnUI0v0NWrU0TdLjqQ&oe=68E6C5EC" alt="صورة من فعالية كبرى للنادي" loading="lazy">
+                   <img src="https://scontent.fqsf1-1.fna.fbcdn.net/v/t39.30808-6/499870870_1218677173287312_1134994761048053377_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=833d8c&_nc_eui2=AeHds7xpXBwOwcwyhgphNphAuInrXfkBagK4ietd-QFqAt9IDGOmeT_mNKGEmwkRGxf20fJ9TGPr2w444zX07YjG&_nc_ohc=rEIrZwZ3oAgQ7kNvwHyUn50&_nc_oc=Adm3JrJAkoPtKnz7ypuYbPrFR2IM9-9VHosgrTLTwqPcbx0qkCRZRS4Kp4yYVZn84R4&_nc_zt=23&_nc_ht=scontent.fqsf1-1.fna&_nc_gid=LddJHlsVElAbxjaO99nXqA&oh=00_AfdFY0t4HljKXK04OHtEucJqynUzcTBnHW6XCY5Km8IF2g&oe=68E721B3" alt="صورة جماعية للفريق" loading="lazy">
+                   <img src="https://scontent.fqsf1-2.fna.fbcdn.net/v/t39.30808-6/487704647_1189369979551365_3487563187996800381_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=833d8c&_nc_eui2=AeE4eVREPVWYI_JFNqzn-KUXvMs3lPJoBg28yzeU8mgGDVLpWtQtfuFZABQlgq3w1cfBM_1LuJTIO-KnoGdNM2E0&_nc_ohc=goCR8sLImDAQ7kNvwG5b-hS&_nc_oc=AdmsjhkQQNcZBQXOFoaXnCoMcFede8EX-jioowKj81B6CN_8AHcrfhlWHzyfwxIJ3-g&_nc_zt=23&_nc_ht=scontent.fqsf1-2.fna&_nc_gid=4uy5LzrnlOawyRlq2at2sw&oh=00_Aff-0TQDQMyuvGysMTn67xK6I7FS2fGQK2rUbq02oy8WWA&oe=68E6E727" alt="صورة من جلسة تدريب" loading="lazy">
+                   <img src="https://scontent.fqsf1-2.fna.fbcdn.net/v/t39.30808-6/480506182_1171415291346834_5726132766457523733_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=833d8c&_nc_eui2=AeFO3bqhO08NAw9NrAybijTB-l1s0OKJgYX6XWzQ4omBhcGLwVBMoHMOX7iG0rwWkPecoyuHyQvbpUIW_XNLJ6Cq&_nc_ohc=77JEAIV_SMoQ7kNvwGhVEHT&_nc_oc=Adka-FzGu4eWfuZ3cOvKLzl2BMfTPT23vUCwxerPQGCFki1Q8kLlCbBG-cLpECZubjM&_nc_zt=23&_nc_ht=scontent.fqsf1-2.fna&_nc_gid=-W5BYLN22PBSQxxEdL2apg&oh=00_AfeXJM9eEFoKaTF-vdaCJ9LyfLYe7CEHmSBazpmvkbiaFw&oe=68E6F946" alt="صورة لإنتاج إعلامي" loading="lazy">
+                   <img src="https://scontent.fqsf1-2.fna.fbcdn.net/v/t39.30808-6/484073789_1171426254679071_3406742454261514539_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=833d8c&_nc_eui2=AeE-sL6tDbgH003KDdA_W8FmdNxUnP42Zmx03FSc_jZmbFA8U2z1UXOdVfMx37EDY2um95FWwvwA9RuscW6ineZw&_nc_ohc=cHxTpTRP510Q7kNvwFlWzlM&_nc_oc=Adno45Aw-3hRIbz8M0NM3Tbx83YfY3It2c4zcfjKhwMG97BMtqtKLThaRx9PdLF4WAQ&_nc_zt=23&_nc_ht=scontent.fqsf1-2.fna&_nc_gid=8GUzDWjhzyMiZ91-4Vb2OA&oh=00_AfdhdFJ_C2mMLtn3n-DUVaSGKXI3k06ktazy3l3Ywm9H6Q&oe=68E6C986" alt="صورة لإنتاج إعلامي" loading="lazy">
+                   <img src="https://scontent.fqsf1-2.fna.fbcdn.net/v/t39.30808-6/481471042_1155269449628085_8378120499320330958_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=833d8c&_nc_eui2=AeF5poNSw7cuABPd5NYFLwL_wjBo45A1vxTCMGjjkDW_FPQVYnSHdFzrCi0wb0K8dUaamK6G5ceESLt6qKGn17Db&_nc_ohc=cBxuRVO_-0UQ7kNvwFbO1kz&_nc_oc=AdkJfkDq8FhYw3snaztZUssVF4s6CEwAh5pOhLvhtSvBSCb2UrehyN_2DY9kg-z2_nI&_nc_zt=23&_nc_ht=scontent.fqsf1-2.fna&_nc_gid=B8XwlAbHmtHkIg03XIHo9Q&oh=00_AfdlavSZtkweu1wHsiDZ6_ADiamY23XzbyriacJ4IxnTJQ&oe=68E6D2AD" alt="صورة لإنتاج إعلامي" loading="lazy">
+                   <img src="https://scontent.fqsf1-1.fna.fbcdn.net/v/t39.30808-6/480696183_1155065619648468_3253386813511924913_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=833d8c&_nc_eui2=AeEVbpZNTMpHgnIwh6DzTmXoGUrxoSaTm5cZSvGhJpOblwZgpxqTBFUaWQE_H_2TRdHW2T1uk42zK1QvmDEncAs0&_nc_ohc=fiWIOsRzJyQQ7kNvwEC0JvC&_nc_oc=AdnclBm3t3OnAKNjHeoFZ2TtoMyFJCpkPBtjt56JKZFcbu09BZLot5C1yYMYGDYPvTs&_nc_zt=23&_nc_ht=scontent.fqsf1-1.fna&_nc_gid=FMWaFL47_d8BeB9mZdDN9Q&oh=00_AfdcXHa4r1yc5zum5xPyaN8c46uIj5xc7d-B3MxHJHA2Gg&oe=68E6DDE6" alt="صورة لإنتاج إعلامي" loading="lazy">
+                   <img src="https://scontent.fqsf1-1.fna.fbcdn.net/v/t39.30808-6/481204794_1155269686294728_7537661330580182480_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=833d8c&_nc_eui2=AeFfoNLNDCdxHHXKlTeRuO1d0-DRVbokZCLT4NFVuiRkIqlXRkFO60Q_V5kKwTsSqMYOLa9soHFh2jL5Lx7PEf4x&_nc_ohc=d-kcSdst5F8Q7kNvwFgEXbi&_nc_oc=Adl0Zi731YAKBCv-98Uie2Chz1hr04SfOnA8VelABzTFN-7GBtn10xw6Lg3SBOo_MMg&_nc_zt=23&_nc_ht=scontent.fqsf1-1.fna&_nc_gid=7i1sdWj6xha9yz88aviO7g&oh=00_AffUKG8RfO7xN2x4tzYsk3NY43qPDaSBpmoRekfd3LBMpw&oe=68E6F22E" alt="صورة لإنتاج إعلامي" loading="lazy">
+                   <img src="https://scontent.fqsf1-2.fna.fbcdn.net/v/t39.30808-6/481073119_1155065306315166_4106260724973672269_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=833d8c&_nc_eui2=AeFgQq4bzS4Qud_1Tap7DNsPngNqAxGc45SeA2oDEZzjlLu_FVTjUOxRWE-ryJZTtWFjvmyF01V_m8M2L8B1i6Ed&_nc_ohc=i9yk0HoE7JQQ7kNvwG8_4hX&_nc_oc=AdnHDT8uJQb0vU22fuD28unOZysqOwK0uzLGVrq8PTVHXzXVzG1oHwy22raw1Wwnd6o&_nc_zt=23&_nc_ht=scontent.fqsf1-2.fna&_nc_gid=ww4MAbjrViIkRhRcRK8Rgg&oh=00_AfeFtWmEpvtoJ9B0E4h8DECsn7ucsdwYGPZ4NZHodBjwFQ&oe=68E6C991" alt="صورة لإنتاج إعلامي" loading="lazy">
+                   <img src="https://scontent.fqsf1-1.fna.fbcdn.net/v/t39.30808-6/481204213_1155066326315064_4618624952624421742_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=833d8c&_nc_eui2=AeFb4kEJ6DsC7KSdPInNQvTZpHEY6QzdiCukcRjpDN2IK6_Ql0lu7ji4-nGObObUI23W_gckblUDDV-sR3bq-etN&_nc_ohc=MOP1s03u6tcQ7kNvwEYrk3f&_nc_oc=AdmSdJmVsHgSd9SG50pnZGs31lqDdAL-ZDomgxpF3dvBLQXwVa8k4aitdRxrnc-h7Ag&_nc_zt=23&_nc_ht=scontent.fqsf1-1.fna&_nc_gid=3kUJUQ4xrfwzDTAM86c04g&oh=00_AfcMoS2wsmJ92_RH1Q-peXGRKyUt6rA40iFUizEOAExMLg&oe=68E6F6F7" alt="صورة لإنتاج إعلامي" loading="lazy">
+                   <img src="https://scontent.fqsf1-1.fna.fbcdn.net/v/t39.30808-6/480708590_1155065572981806_1963703571006570877_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=833d8c&_nc_eui2=AeE-H9RWJ-jVmFtFPifF_j9U23s0LRrXEL7bezQtGtcQvpnsoz8JHrDvNUo30FJrMqBAgf8rNKWcDPvT0V8xbLTu&_nc_ohc=X_QrA0gU3_IQ7kNvwGxbAFO&_nc_oc=Adm73aor2oRZ7KOrwsTj7_r76-th3igBGQaUB5v-iwRGRi1AfzInl-I4jOgj7v_Dg1Y&_nc_zt=23&_nc_ht=scontent.fqsf1-1.fna&_nc_gid=FBR1LGt68--nwQq-orvkeg&oh=00_AfdynPOqOjyEDb1mmyr6WLeW3_nZHCczNETfhLwK9qyF_w&oe=68E6D403" alt="صورة لإنتاج إعلامي" loading="lazy">
+                   <img src="https://scontent.fqsf1-2.fna.fbcdn.net/v/t39.30808-6/480859585_1155265086295188_1193572717672614122_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=833d8c&_nc_eui2=AeFAioELeRO6ayxYlf4qte1U1LIHSs-CGLXUsgdKz4IYtdJiIPBGkjXZHUCefhmoqpBhpGOllun7CQX0PNW4tZMm&_nc_ohc=RB7P5SkzNcUQ7kNvwFiQysR&_nc_oc=AdmwCpJbi5pEi6MKJJv5gK8uqDk3O8LdLZrk8RHQjk0oqasjw9mSvPaL3xqI1rz4Zkg&_nc_zt=23&_nc_ht=scontent.fqsf1-2.fna&_nc_gid=xoNvDLfcdR6hwwwcG0rtqQ&oh=00_AffzmK_VojV15l_WOUDv9eBZao-q4E311knvQAvsLi8P0A&oe=68E6C77C" alt="صورة لإنتاج إعلامي" loading="lazy">
+                   <img src="https://scontent.fqsf1-2.fna.fbcdn.net/v/t39.30808-6/480729380_1155268552961508_5491177463296291528_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=833d8c&_nc_eui2=AeGDVK3ovspD_1lL5WsQUqo86QB6R3s4kfrpAHpHeziR-qryYuRMqueHti34vcL2TrwWVewN2dEdTd7eBMrCs_uq&_nc_ohc=n1g4t9TkRc4Q7kNvwHaXLYJ&_nc_oc=Admk3mjGFRY7WToe1Ilk_uvtQRZzdmXqjC-joGzDnojzgkoSTDMZC3wDFiOgiTreQSs&_nc_zt=23&_nc_ht=scontent.fqsf1-2.fna&_nc_gid=BKOtkkOvduUK6WEoY_JIcA&oh=00_AfcVEI5GFU1GOXM_gAQhNVDMtFCXrePk9gp9GbtVCtF0oA&oe=68E6DEB7" alt="صورة لإنتاج إعلامي" loading="lazy">
+                </div>
+            </div>
+        </section>
+
+        <section id="services">
+            <h2 class="section-title">محاور التميز والاحترافية</h2>
+            <div class="section-divider"></div>
+            <div class="grid">
+               <article class="card">
+                   <h3><i class="fas fa-video"></i> الإنتاج السمعي البصري</h3>
+                   <p class="muted-text">إتقان فنون الإخراج السينمائي، التصوير الفوتوغرافي، والمونتاج المتقدم لمنصات الفيديو الرائدة.</p>
+               </article>
+
+               <article class="card">
+                   <h3><i class="fas fa-microphone-alt"></i> الإعلام الرقمي والبودكاست</h3>
+                   <p class="muted-text">صياغة المحتوى الرقمي المؤثر، إدارة الحملات الإعلامية، وإعداد وتقديم البودكاست الاحترافي.</p>
+               </article>
+
+               <article class="card">
+                   <h3><i class="fas fa-handshake"></i> الشراكات  </h3>
+                   <p class="muted-text">برامج توجيه مكثفة، وتوفير فرص التدريب الحصري مع شركاء النادي من المؤسسات الخارجية و الأقسام و النوادي الأخري.</p>
+               </article>
+
+               <article class="card">
+                   <h3><i class="fas fa-graduation-cap"></i> شهادات </h3>
+                   <p class="muted-text">تقديم شهادات حضور وتقدير معتمدة بناءً على إكمال النشاطات التطبيقية بنجاح واحترافية عالية.</p>
+               </article>
+            </div>
+        </section>
+
+        <section id="media-coverage">
+            <h2 class="section-title">أحدث التغطيات الإعلامية</h2>
+            <div class="section-divider"></div>
+            <div class="video-grid">
+                <div class="video-card">
+                    <div class="video-embed">
+                        <iframe src="https://www.youtube.com/embed/YOUR_VIDEO_ID_3" allowfullscreen loading="lazy"></iframe>
+                    </div>
+                    <div class="video-info">
+                        <h4>أبرز اللقطات</h4>
+                        <p class="muted-text" style="font-size: 0.9rem;">مسابقة فارس القرأن الكريم الطبعة الرابعة.</p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <section id="leaders">
+            <h2 class="section-title">القيادة التي ألهمت التغيير</h2>
+            <div class="section-divider"></div>
+            <div class="grid">
+               <div class="card leader-card">
+                   <img class="leader-img" src="https://scontent.fqsf1-1.fna.fbcdn.net/v/t39.30808-6/240820087_2944597575815129_8972904836923558996_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeFInmL9EhshUr7PJy1sv1d0L0-f3ksB0e8vT5_eSwHR70OmYtCphXG_DdY2b8xiYy5D4niWMlrBdeZRWNG7pkyT&_nc_ohc=JtCzsxAxy6AQ7kNvwGmc0tD&_nc_oc=AdmosRxIO6gGaxsW5OgITg2qRNb28j3AxOhGBbnk9ATS3e1qXT-QvzrC1pE3q42fbaM&_nc_zt=23&_nc_ht=scontent.fqsf1-1.fna&_nc_gid=-YsJWzJn546In2g2UBIOcQ&oh=00_AffmS5J09EG39g5XKpAjvmOpXuslrZFsceD-Rbj1XVu4bQ&oe=68E7085C" alt="هشام بوعروري" loading="lazy">
+                   <h3>هشام بوعروري</h3>
+                   <p class="muted-text"></p>
+               </div>
+               <div class="card leader-card">
+                   <img class="leader-img" src="" alt="رحيم خرفي" loading="lazy">
+                   <h3>رحيم خرفي</h3>
+                   <p class="muted-text"> </p> 
+               </div>
+               <div class="card leader-card">
+                   <img class="leader-img" src="https://scontent.fqsf1-2.fna.fbcdn.net/v/t39.30808-6/473556624_1822770595204896_7057390965176109661_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=833d8c&_nc_eui2=AeHjMr5V1G8s5j4909MCceCyiZzDjJXwvuWJnMOMlfC-5azekBSjZsMz3r4a0JfSkfKFPeHlMG6PfHXXq8FL5xsH&_nc_ohc=m4kkEUq2pdYQ7kNvwGOlRIM&_nc_oc=AdlkSzbBpersO73pseEsr3aO0cWfSkwNlQjL_OBrIQ7GAC6y4RNqeCLEhs0puxvd9dM&_nc_zt=23&_nc_ht=scontent.fqsf1-2.fna&_nc_gid=fd3rRYtcgfnKPoT_wuZEFg&oh=00_AfdLGWhRX58cfmLNRtn_V61lPxpynfxAsoRvYN_1hjiGtA&oe=68E6EE74" alt="محي الدين خرفي" loading="lazy">
+                   <h3>محي الدين خرفي</h3>
+                   <p class="muted-text">.</p> 
+               </div>
+               <div class="card leader-card">
+                   <img class="leader-img" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRghGCJ8A6253erCA-pRYmLUs_dj1L99SRlgQ&s" alt="مروة ساعو" loading="lazy">
+                   <h3>مروة ساعو</h3>
+                   <p class="muted-text"></p>
+               </div>
+               <div class="card leader-card">
+                   <img class="leader-img" src="https://scontent.fqsf1-2.fna.fbcdn.net/v/t39.30808-6/475965022_1140762754412088_8424230630008855004_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=833d8c&_nc_eui2=AeEMld32z7utSOSbespW6nXnHWD079HU7PQdYPTv0dTs9EklCSFNBfI7ogY4MbAWf-LyvAGzgWu3YJ-v0_kVdsZ6&_nc_ohc=Wj0V1eSUymoQ7kNvwGUDWxH&_nc_oc=AdlTQYkehcvQdVDMzrXPnH3oL2pfDbfht2zutio2Pyp83bcOb1XnHqathtSa3sk4deE&_nc_zt=23&_nc_ht=scontent.fqsf1-2.fna&_nc_gid=LGlNIk109u8_rbWQOCEZnA&oh=00_Afffj_yR7DMR1Z7gZYQMQr6IbKUnkRLKJ-YQfazipIdNyw&oe=68E6DEC6" alt="مراد بوڨرة" loading="lazy">
+                   <h3>مراد بوڨرة</h3>
+                   <p class="muted-text" </p> 
+               </div>
+               <div class="card leader-card">
+                   <img class="leader-img" src="https://scontent.fqsf1-1.fna.fbcdn.net/v/t39.30808-6/481217942_1824419441642920_8420947785955265117_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=a5f93a&_nc_eui2=AeEFnWL6zQ_-oGK9CcJtV-EN-QOD1ci9J5P5A4PVyL0nkzeedmZKtzPoWQLT36URrwh165hnn3miFGZpqk8MwAib&_nc_ohc=UUsv-yH2178Q7kNvwFHRLzY&_nc_oc=Adk7fFaZuB5njvAPomUcjt1LlkexVkhgzCqph_2yCabdesSx0O6iFAHz1Hb0dHlygrY&_nc_zt=23&_nc_ht=scontent.fqsf1-1.fna&_nc_gid=CI2pUhPZp1Pdnkloow38cw&oh=00_AfeaQe0_Xag0ac_oA-Ft22SdSM2MOI6gqjwzEcyamPj19A&oe=68E6D6B1" alt="عبد الكريم بورحلة" loading="lazy">
+                   <h3>عبد الكريم بورحلة</h3>
+                   <p class="muted-text"></p>
+               </div>
+            </div>
+        </section>
+
+        <section id="contact" style="padding-bottom: 100px;">
+            <h2 class="section-title">ابدأ رحلة التميز معنا</h2>
+            <div class="section-divider"></div>
+            
+            <div class="card center" style="max-width: 700px; margin: 0 auto; padding: 40px;">
+                <p class="hero-lead" style="font-size: 1.1rem; margin: 0 auto 20px; color: var(--text-color);">
+                    نحن بانتظار شغفك وإبداعك. املأ النموذج أدناه وسنتواصل معك قريبًا.
+                </p>
+
+                <form name="contact-form" id="contact-form" onsubmit="submitForm(event)" style="display:flex; flex-direction: column; gap: 15px; margin-top: 30px;">
+                    <input type="text" name="name" placeholder="الاسم الكامل" required style="padding: 12px; border: 1px solid var(--border-color); border-radius: 8px;">
+                    <input type="universty" name="universty" placeholder="التخصص الجامعي" required style="padding: 12px; border: 1px solid var(--border-color); border-radius: 8px;">
+                    <input type="email" name="email" placeholder="البريد الإلكتروني" required style="padding: 12px; border: 1px solid var(--border-color); border-radius: 8px;">
+                    <input type="phone number" name="phone number" placeholder="رقم الهاتف" required style="padding: 12px; border: 1px solid var(--border-color); border-radius: 8px;">
+                    <textarea name="message" placeholder="رسالتك" required style="padding: 12px; border: 1px solid var(--border-color); border-radius: 8px; min-height: 120px;"></textarea>
+                    <button type="submit" class="btn accent"><i class="fas fa-paper-plane"></i> أرسل الآن</button>
+                </form>
+
+                <div id="form-status" style="margin-top: 20px; text-align: center; font-weight: bold;"></div>
+
+                <div class="social-icons-footer">
+                    <a href="https://www.facebook.com/profile.php?id=100054351229278" target="_blank" title="صفحتنا على فيسبوك"><i class="fab fa-facebook-square"></i></a>
+                    <a href="https://www.instagram.com/sitifismediaclub19?igsh=MXdhaWdlcjNjdDRjZQ==" target="_blank" title="صفحتنا على إنستغرام"><i class="fab fa-instagram-square"></i></a>
+                    <a href="https://www.youtube.com/@sitifismediaclub" target="_blank" aria-label="يوتيوب"><i class="fab fa-youtube"></i></a>
+                    <a href="https://www.tiktok.com/@sitifis.media.clu?_t=ZS-905PwpZETXr&_r=1" target="_blank" title="حسابنا على تيك توك"><i class="fab fa-tiktok"></i></a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <div class="container">
+            © 2025 نادي سيتيفيس للإعلام — جودة، احترافية، وتميز.
+        </div>
+    </footer>
+
+    <script>
+        // **********************************************
+        // 1. منطق الوضع الليلي (Dark Mode Toggle)
+        // **********************************************
+        const toggleButton = document.getElementById('toggleTheme');
+        const themeIcon = document.getElementById('themeIcon');
+        const storageKey = 'sitifis_theme';
+        
+        function applyTheme(isDark) {
+            themeIcon.classList.remove('fa-sun', 'fa-moon', 'fa-adjust'); 
+
+            if (isDark) {
+                document.body.classList.add('dark');
+                themeIcon.classList.add('fa-sun'); 
+            } else {
+                document.body.classList.remove('dark');
+                themeIcon.classList.add('fa-moon'); 
+            }
+            localStorage.setItem(storageKey, isDark ? 'dark' : 'light');
+        }
+
+        const storedTheme = localStorage.getItem(storageKey);
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        
+        if (storedTheme === 'dark') {
+            applyTheme(true);
+        } else if (storedTheme === 'light') {
+            applyTheme(false);
+        } else {
+            applyTheme(prefersDark);
+        }
+
+        toggleButton.addEventListener('click', () => {
+            const isDark = !document.body.classList.contains('dark');
+            applyTheme(isDark);
+        });
+
+        // **********************************************
+        // 2. ميزة Scroll Reveal (إظهار العناصر أثناء التمرير)
+        // **********************************************
+        const cardsToReveal = document.querySelectorAll('.card, .video-card'); // 💡 تم تحديث هذا السطر ليشمل .video-card
+
+        const revealCards = () => {
+            const windowHeight = window.innerHeight;
+            const revealPoint = 120; 
+
+            cardsToReveal.forEach(card => {
+                const cardTop = card.getBoundingClientRect().top;
+                
+                if (cardTop < windowHeight - revealPoint) {
+                    card.classList.add('visible');
+                } 
+            });
+        };
+        
+        window.addEventListener('scroll', revealCards);
+        window.addEventListener('load', revealCards);
+        
+        revealCards();
+
+        // **********************************************
+        // 3. منطق قائمة الجوال (Mobile Menu Toggle)
+        // **********************************************
+        function toggleMenu() {
+            const nav = document.getElementById('mainNav');
+            const btn = document.querySelector('.menu-toggle');
+            const isExpanded = nav.classList.contains('show');
+
+            if (isExpanded) {
+                nav.classList.remove('show');
+                btn.setAttribute('aria-expanded', 'false');
+            } else {
+                nav.classList.add('show');
+                btn.setAttribute('aria-expanded', 'true');
+            }
+        }
+        
+        // إغلاق القائمة عند النقر على رابط (في الجوال)
+        document.querySelectorAll('#mainNav a').forEach(link => {
+            link.addEventListener('click', () => {
+                const nav = document.getElementById('mainNav');
+                const btn = document.querySelector('.menu-toggle');
+                if (window.innerWidth <= 900 && nav.classList.contains('show')) {
+                    nav.classList.remove('show');
+                    btn.setAttribute('aria-expanded', 'false');
+                }
+            });
+        });
+        
+        // **********************************************
+        // 4. منطق إرسال النموذج (Form Submission) - (افتراضي)
+        // **********************************************
+        function submitForm(event) {
+            event.preventDefault();
+            const formStatus = document.getElementById('form-status');
+            formStatus.style.color = 'var(--primary)';
+            formStatus.textContent = "جاري إرسال الرسالة، يرجى الانتظار...";
+
+            // هنا يمكنك إضافة منطق إرسال النموذج الفعلي (مثل استخدام Fetch API أو AJAX)
+            // بما أن هذا كود HTML/CSS/JS فقط، سنقوم بمحاكاة الإرسال
+            setTimeout(() => {
+                formStatus.style.color = 'var(--accent)';
+                formStatus.textContent = "✅ شكراً لك! تم استلام رسالتك بنجاح وسنتواصل معك قريباً.";
+                document.getElementById('contact-form').reset();
+            }, 2000);
+        }
+        // **********************************************
+    </script>
+</body>
+</html>
